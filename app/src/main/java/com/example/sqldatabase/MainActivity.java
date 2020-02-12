@@ -1,6 +1,7 @@
 package com.example.sqldatabase;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     MySqlite mySqlite;
 
     EditText EmailEditTxt,PhoneNumberEditTxt,NameEditText,SnoEditTxt;
-    Button InsertBtn ,ReadBtn,UpdateBtn,ViewAllBtn;
+    Button InsertBtn ,ReadBtn,UpdateBtn,ViewAllBtn,DeleteBtn,DeleteAllRowsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         ReadBtn = (Button)findViewById(R.id.ReadBtn);
         UpdateBtn =(Button)findViewById(R.id.UpdateBtn);
         ViewAllBtn =(Button)findViewById(R.id.ViewAllBtn);
+        DeleteBtn =(Button)findViewById(R.id.DeleteBtn);
+        DeleteAllRowsBtn =(Button)findViewById(R.id.DeleteAllRowsBtn);
     }
     private void onClick() {
 
@@ -105,8 +108,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+        DeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Integer deleteRows = mySqlite.deleteData(SnoEditTxt.getText().toString());
 
+                if (deleteRows >0){
+                    Toast.makeText(MainActivity.this, "Data Deleted", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "Data not Deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        DeleteAllRowsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SQLiteDatabase sqLiteDatabase = mySqlite.getWritableDatabase();
+
+
+            }
+        });
+
+
+
+    }
+///Show message in Click View All Button
     private void showMessage(String title, String Message) {
 
         AlertDialog.Builder builder= new AlertDialog.Builder(this);
@@ -115,4 +142,10 @@ public class MainActivity extends AppCompatActivity {
         builder.setMessage(Message);
         builder.show();
     }
+
+//public void clearTable(){
+//
+//        mySqlite.deleteAllData();
+//}
+
 }

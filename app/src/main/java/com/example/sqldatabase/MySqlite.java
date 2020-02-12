@@ -131,4 +131,18 @@ public class MySqlite extends SQLiteOpenHelper {
         return cursor;
 
     }
+
+    public Integer deleteData(String sno){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        return sqLiteDatabase.delete(MYTABLE,"SNO = ?",new String[]{sno});
+    }
+
+//    public Integer deleteAllData(){
+//
+//        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+//        return sqLiteDatabase.delete(MYTABLE,null,null);
+//
+//
+//    }
+
 }
